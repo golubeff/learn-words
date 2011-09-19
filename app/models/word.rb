@@ -4,21 +4,38 @@ class Word < ActiveRecord::Base
 
   before_create :apply_counter
 
-  def self.show_next
-    w = next_word
-    `growlnotify -m "#{w.english}" -t '#{w.russian}'`
-    `say "#{w.english}, #{w.russian}"`
+  class << self
+    def screensaver_active?
+      !`ps ax|grep [S]creenSaverEngine`.empty?
+    end
 
-    w.destroy if w.counter - w.initial_counter > 10
+    def show_next
+      return false if screensaver_active?
+
+      w = next_word
+      `growlnotify -m "#{w.english}" -t '#{w.russian}'`
+      `say "#{w.english}, #{w.russian}"`
+
+      w.destroy if w.counter - w.initial_counter > 10
+    end
+
+
+    def next_word
+      w = self.find(:first, :order => "counter")
+      w.counter += 1
+      w.save!
+      w
+    end
+
+    def start
+      while(1) do
+        self.show_next
+        sleep 180
+      end
+    end
+
   end
 
-
-  def self.next_word
-    w = self.find(:first, :order => "counter")
-    w.counter += 1
-    w.save!
-    w
-  end
 
   def apply_counter
     smallest_counter = self.class.find(:first, :order => "counter").counter
@@ -27,10 +44,4 @@ class Word < ActiveRecord::Base
     true
   end
 
-  def self.start
-    while(1) do
-      self.show_next
-      sleep 180
-    end
-  end
 end
