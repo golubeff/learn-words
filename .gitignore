@@ -1,4 +1,6 @@
 .bundle
+config/database.yml
+nohup.out
 db/*.sqlite3
 log/*.log
 tmp/
