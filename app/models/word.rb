@@ -1,4 +1,6 @@
 class Word < ActiveRecord::Base
+  MAX_COUNTER = 10
+      
   validates_presence_of :russian, :english
   validates_uniqueness_of :english
 
@@ -16,12 +18,12 @@ class Word < ActiveRecord::Base
       `growlnotify -m "#{w.russian}"`
       sleep 7
 
-      `growlnotify -m "#{w.english}" -t '#{w.russian}'`
+      `growlnotify -m "#{w.english} (#{w.show_counter} / #{MAX_COUNTER})" -t '#{w.russian}'`
       `say -v Alex "#{w.english}"`
       sleep 1
       `say "#{w.russian}"`
 
-      w.destroy if w.counter - w.initial_counter > 10
+      w.destroy if w.show_counter >= MAX_COUNTER
     end
 
 
@@ -41,6 +43,9 @@ class Word < ActiveRecord::Base
 
   end
 
+  def show_counter
+    counter - initial_counter
+  end
 
   def apply_counter
     smallest_counter = self.class.find(:first, :order => "counter").counter
