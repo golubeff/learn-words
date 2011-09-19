@@ -13,8 +13,13 @@ class Word < ActiveRecord::Base
       return false if screensaver_active?
 
       w = next_word
+      `growlnotify -m "#{w.russian}"`
+      sleep 7
+
       `growlnotify -m "#{w.english}" -t '#{w.russian}'`
-      `say "#{w.english}, #{w.russian}"`
+      `say -v Alex "#{w.english}"`
+      sleep 1
+      `say "#{w.russian}"`
 
       w.destroy if w.counter - w.initial_counter > 10
     end
