@@ -7,7 +7,11 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-
+  <% if Setting.get('enabled') %>
+    <%= link_to "Switch off", settings_path(:key => "enabled", :value => ""), :method => "post"%>
+  <% else %>
+    <%= link_to "Switch on", settings_path(:key => "enabled", :value => "true"), :method => "post" %>
+  <% end %>
 <%= yield %>
 
 </body>

@@ -1,4 +1,6 @@
 Eng::Application.routes.draw do
+  resources :settings
+
   resources :words
 
   # The priority is based upon order of creation:

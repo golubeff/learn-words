@@ -11,8 +11,13 @@ class Word < ActiveRecord::Base
       !`ps ax|grep [S]creenSaverEngine`.empty?
     end
 
+    def disabled?
+      !Setting.get('enabled')
+    end
+
     def show_next
       return false if screensaver_active?
+      return false if disabled?
 
       w = next_word
       `growlnotify -m "#{w.russian}"`
