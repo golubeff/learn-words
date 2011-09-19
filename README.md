@@ -12,15 +12,17 @@ Installation
   to Speech -> System Voice -> Customize)
 * Create config/database.yml
 * Run server:
-  ./script/rails s
+
+    ./script/rails s
+
 * Navigate to http://localhost:3000/ to fill database with words
 * Start reminder in background: 
 
-  nohup ~/learn-words/script/rails runner 'Word.start' &
+    nohup ~/learn-words/script/rails runner 'Word.start' &
 
 * Alter crontab config to start application with system boot:
 
-  crontab -e
+    crontab -e
 
-  @reboot * * * * * nohup /bin/bash -c "~/learn-words/script/rails  runner 'Word.start'" 
+    @reboot * * * * * nohup /bin/bash -c "~/learn-words/script/rails  runner 'Word.start'" 
 
