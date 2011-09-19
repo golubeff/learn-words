@@ -10,14 +10,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110919075331) do
+ActiveRecord::Schema.define(:version => 20110919084021) do
 
   create_table "words", :force => true do |t|
     t.string   "russian"
     t.string   "english"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "counter",    :default => 0, :null => false
+    t.integer  "counter",         :default => 0, :null => false
+    t.integer  "initial_counter", :default => 0, :null => false
   end
 
 end

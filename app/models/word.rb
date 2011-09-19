@@ -8,6 +8,8 @@ class Word < ActiveRecord::Base
     w = next_word
     `growlnotify -m "#{w.english}" -t '#{w.russian}'`
     `say "#{w.english}, #{w.russian}"`
+
+    w.destroy if w.counter - w.initial_counter > 10
   end
 
 
@@ -19,7 +21,9 @@ class Word < ActiveRecord::Base
   end
 
   def apply_counter
-    self.counter = self.class.find(:first, :order => "counter").counter
+    smallest_counter = self.class.find(:first, :order => "counter").counter
+    self.counter = smallest_counter
+    self.initial_counter = smallest_counter
     true
   end
 
