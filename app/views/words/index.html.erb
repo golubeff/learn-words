@@ -1,0 +1,25 @@
+<h1>Listing words</h1>
+
+<table>
+  <tr>
+    <th>Russian</th>
+    <th colspan="2">English</th>
+    <th colspan="4"></th>
+  </tr>
+
+<% @words.each do |word| %>
+  <tr>
+    <td><%= word.russian %></td>
+    <td><%= word.english %></td>
+    <td><audio id="audio_<%= word.id %>" src="http://translate.google.com/translate_tts?tl=en&q=<%= word.english %>" preload="none" controls="true"></audio></td>
+    <td><%= word.counter %></td>
+    <td><%= link_to 'Show', word %></td>
+    <td><%= link_to 'Edit', edit_word_path(word) %></td>
+    <td><%= link_to 'Destroy', word, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Word', new_word_path %>
