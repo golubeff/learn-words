@@ -33,7 +33,7 @@ class Word < ActiveRecord::Base
 
 
     def next_word
-      w = self.find(:first, :order => "counter")
+      w = self.find(:first, :order => "counter - initial_counter")
       w.counter += 1
       w.save!
       w

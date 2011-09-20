@@ -12,7 +12,7 @@
     <td><%= word.russian %></td>
     <td><%= word.english %></td>
     <td><audio id="audio_<%= word.id %>" src="http://translate.google.com/translate_tts?tl=en&q=<%= word.english %>" preload="none" controls="true"></audio></td>
-    <td><%= word.counter %></td>
+    <td>Initial: <%= word.initial_counter %>. Showed: <%= word.show_counter %></td>
     <td><%= link_to 'Show', word %></td>
     <td><%= link_to 'Edit', edit_word_path(word) %></td>
     <td><%= link_to 'Destroy', word, :confirm => 'Are you sure?', :method => :delete %></td>
