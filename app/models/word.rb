@@ -22,7 +22,9 @@ class Word < ActiveRecord::Base
       return false if disabled?
 
       w = next_word
-      `growlnotify -m "#{w.russian}"`
+      hint = w.russian
+      hint = w.english if w.counter % 2 == 0
+      `growlnotify -m "#{hint}"`
       sleep 7
 
       `growlnotify -m "#{w.english} (#{w.show_counter} / #{MAX_COUNTER})" -t '#{w.russian}'`
