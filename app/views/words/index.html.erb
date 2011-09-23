@@ -1,19 +1,24 @@
 <h1>Listing words</h1>
 
-<table>
+<table cellspacing="0">
   <tr>
     <th>Russian</th>
-    <th colspan="2">English</th>
+    <th>English</th>
     <th colspan="4"></th>
   </tr>
 
 <% @words.each do |word| %>
-  <tr>
+  <tr class="<%= cycle('odd', 'even') %> <%= 'archived' if word.archived? %>">
     <td><%= word.russian %></td>
     <td><%= word.english %></td>
-    <td><audio id="audio_<%= word.id %>" src="http://translate.google.com/translate_tts?tl=en&q=<%= word.english %>" preload="none" controls="true"></audio></td>
     <td>Initial: <%= word.initial_counter %>. Showed: <%= word.show_counter %></td>
-    <td><%= link_to 'Show', word %></td>
+    <td>
+      <% if word.archived? %>
+        <%= link_to 'Unarchive', unarchive_word_path(word), :method => "post" %>
+      <% else %>
+        <%= link_to 'Archive', archive_word_path(word), :method => "post" %>
+      <% end %>
+      </td>
     <td><%= link_to 'Edit', edit_word_path(word) %></td>
     <td><%= link_to 'Destroy', word, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>

@@ -1,3 +1,20 @@
 // Place all the styles related to the words controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+td {
+  padding: 4px;
+}
+
+tr.odd {
+  background-color: #cfc;
+}
+
+tr.archived {
+  background-color: #ccc
+}
+
+tr.archived.odd {
+  background-color: #bbb;
+}
+

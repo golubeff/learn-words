@@ -1,4 +1,6 @@
 class Word < ActiveRecord::Base
+  default_scope :order => "archived"
+
   MAX_COUNTER = 10
       
   validates_presence_of :russian, :english
@@ -33,7 +35,7 @@ class Word < ActiveRecord::Base
 
 
     def next_word
-      w = self.find(:first, :order => "counter - initial_counter, created_at")
+      w = self.find(:first, :conditions => { :archived => false }, :order => "counter - initial_counter, created_at")
       w.counter += 1
       w.save!
       w

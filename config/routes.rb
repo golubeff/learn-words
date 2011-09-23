@@ -1,7 +1,12 @@
 Eng::Application.routes.draw do
   resources :settings
 
-  resources :words
+  resources :words do
+    member do 
+      post 'archive'
+      post 'unarchive'
+    end
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

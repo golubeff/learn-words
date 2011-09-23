@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110919154652) do
+ActiveRecord::Schema.define(:version => 20110923042330) do
 
   create_table "settings", :force => true do |t|
     t.string   "key"
@@ -24,8 +24,9 @@ ActiveRecord::Schema.define(:version => 20110919154652) do
     t.string   "english"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "counter",         :default => 0, :null => false
-    t.integer  "initial_counter", :default => 0, :null => false
+    t.integer  "counter",         :default => 0,     :null => false
+    t.integer  "initial_counter", :default => 0,     :null => false
+    t.boolean  "archived",        :default => false, :null => false
   end
 
 end
