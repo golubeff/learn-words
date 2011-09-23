@@ -11,7 +11,7 @@
   <tr class="<%= cycle('odd', 'even') %> <%= 'archived' if word.archived? %>">
     <td><%= word.russian %></td>
     <td><%= word.english %></td>
-    <td>Initial: <%= word.initial_counter %>. Showed: <%= word.show_counter %></td>
+    <td>Counter: <%= word.counter %>. Initial: <%= word.initial_counter %>. Showed: <%= word.show_counter %></td>
     <td>
       <% if word.archived? %>
         <%= link_to 'Unarchive', unarchive_word_path(word), :method => "post" %>

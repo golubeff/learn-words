@@ -35,7 +35,7 @@ class Word < ActiveRecord::Base
 
 
     def next_word
-      w = self.find(:first, :conditions => { :archived => false }, :order => "counter - initial_counter, created_at")
+      w = self.find(:first, :conditions => { :archived => false }, :order => "counter, created_at")
       w.counter += 1
       w.save!
       w
