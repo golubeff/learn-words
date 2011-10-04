@@ -1,11 +1,10 @@
 class Word < ActiveRecord::Base
-  default_scope :order => "archived"
+  default_scope :order => "archived, created_at"
 
-  MAX_COUNTER = 10
-      
+  scope :archived, :conditions => { :archived => true }
+  scope :active, :conditions => { :archived => false }
   validates_presence_of :russian, :english
   validates_uniqueness_of :english
-
   before_create :apply_counter
 
   class << self
@@ -27,12 +26,10 @@ class Word < ActiveRecord::Base
       `growlnotify -m "#{hint}"`
       sleep 7
 
-      `growlnotify -m "#{w.english} (#{w.show_counter} / #{MAX_COUNTER})" -t '#{w.russian}'`
+      `growlnotify -m "#{w.english}" -t '#{w.russian}'`
       `say -v Alex "#{w.english}"`
       sleep 1
       `say "#{w.russian}"`
-
-      w.destroy if w.show_counter >= MAX_COUNTER
     end
 
 
@@ -52,14 +49,9 @@ class Word < ActiveRecord::Base
 
   end
 
-  def show_counter
-    counter - initial_counter
-  end
-
   def apply_counter
     smallest_counter = self.class.find(:first, :order => "counter").counter
     self.counter = smallest_counter
-    self.initial_counter = smallest_counter
     true
   end
 
