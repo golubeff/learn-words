@@ -50,7 +50,7 @@ class Word < ActiveRecord::Base
   end
 
   def apply_counter
-    smallest_counter = self.class.find(:first, :order => "counter").counter
+    smallest_counter = self.class.find(:first, :conditions => { :archived => false }, :order => "counter").counter
     self.counter = smallest_counter
     true
   end
