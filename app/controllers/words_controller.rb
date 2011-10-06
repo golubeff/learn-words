@@ -12,4 +12,9 @@ class WordsController < InheritedResources::Base
   def create
     create!{ new_word_path }
   end
+
+  protected
+  def collection
+    @words ||= Word.order('archived, created_at')
+  end
 end

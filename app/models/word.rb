@@ -1,5 +1,5 @@
 class Word < ActiveRecord::Base
-  default_scope :order => "archived, created_at"
+  #default_scope :order => "archived, created_at"
 
   scope :archived, :conditions => { :archived => true }
   scope :active, :conditions => { :archived => false }
