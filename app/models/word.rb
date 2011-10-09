@@ -29,7 +29,7 @@ class Word < ActiveRecord::Base
       `growlnotify -m "#{w.english}" -t '#{w.russian}'`
       `say -v Alex "#{w.english}"`
       sleep 1
-      `say "#{w.russian}"`
+      `say -v Milena "#{w.russian}"`
     end
 
 
