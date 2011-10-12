@@ -24,5 +24,5 @@ Installation
 
     crontab -e
 
-    @reboot * * * * * nohup /bin/bash -c "~/learn-words/script/rails  runner 'Word.start'" 
+    @reboot nohup /bin/bash -c "~/learn-words/script/rails  runner 'Word.start'" 
 
