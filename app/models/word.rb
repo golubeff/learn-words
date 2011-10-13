@@ -6,6 +6,8 @@ class Word < ActiveRecord::Base
   validates_presence_of :russian, :english
   validates_uniqueness_of :english
   before_create :apply_counter
+  after_save :rebuild_learning_words
+  after_destroy :rebuild_learning_words
 
   class << self
     def screensaver_active?
@@ -38,7 +40,7 @@ class Word < ActiveRecord::Base
 
 
     def next_word
-      w = self.find(:first, :conditions => { :archived => false }, :order => "counter, created_at")
+      w = self.find(:first, :conditions => { :learning => true }, :order => "counter, created_at")
       w.counter += 1
       w.save!
       w
@@ -56,6 +58,12 @@ class Word < ActiveRecord::Base
   def apply_counter
     smallest_counter = self.class.find(:first, :conditions => { :archived => false }, :order => "counter").counter
     self.counter = smallest_counter
+    true
+  end
+
+  def rebuild_learning_words
+    self.class.update_all "learning = false"
+    self.class.update_all "learning = true", "id in (select id from words where archived is false order by created_at limit 15)"
     true
   end
 

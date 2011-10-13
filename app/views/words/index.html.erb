@@ -11,7 +11,7 @@ Learning <%= Word.active.count %> words.
   </tr>
 
 <% @words.each do |word| %>
-  <tr id="word_<%= word.id %>" class="<%= cycle('odd', 'even') %> <%= 'archived' if word.archived? %>">
+  <tr id="word_<%= word.id %>" class="<%= cycle('odd', 'even') %> <%= 'archived' if word.archived? %> <%= 'learning' if word.learning? %>">
     <td class="russian"><a href="javascript:;" onclick="toggle('russian')"><%= word.russian %></a></td>
     <td class="english"><a href="javascript:;" onclick="toggle('english')"><%= word.english %></a></td>
     <td>
