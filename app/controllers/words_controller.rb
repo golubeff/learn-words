@@ -15,6 +15,6 @@ class WordsController < InheritedResources::Base
 
   protected
   def collection
-    @words ||= Word.order('archived, created_at')
+    @words ||= Word.order('learning desc, archived, archived_at desc, created_at')
   end
 end

@@ -8,6 +8,7 @@ class Word < ActiveRecord::Base
   before_create :apply_counter
   after_save :rebuild_learning_words
   after_destroy :rebuild_learning_words
+  before_save :set_archived_at
 
   class << self
     def screensaver_active?
@@ -49,7 +50,7 @@ class Word < ActiveRecord::Base
     def start
       while(1) do
         self.show_next
-        sleep 180
+        sleep Setting.get('timeout').to_i
       end
     end
 
@@ -64,6 +65,13 @@ class Word < ActiveRecord::Base
   def rebuild_learning_words
     self.class.update_all "learning = false"
     self.class.update_all "learning = true", "id in (select id from words where archived is false order by created_at limit 15)"
+    true
+  end
+
+  def set_archived_at
+    if self.changes['archived']
+      self.archived_at = Time.now
+    end
     true
   end
 

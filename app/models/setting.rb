@@ -1,6 +1,7 @@
 class Setting < ActiveRecord::Base
   DEFAULTS = {
-    'enabled' => { 'ttl' => 30.minutes, 'value' => 'on' }
+    'enabled' => { 'ttl' => 30.minutes, 'value' => 'on' },
+    'timeout' => { 'value' => 1.minute.to_s }
   }
 
   before_create :handle_default_value
@@ -12,14 +13,14 @@ class Setting < ActiveRecord::Base
 
   def self.get(k)
     record = self.get_record(k)
-    if record.updated_at && Time.now - record.updated_at >= DEFAULTS[k]['ttl']
+    if DEFAULTS[k]['ttl'] && record.updated_at && Time.now - record.updated_at >= DEFAULTS[k]['ttl']
       record.update_attribute :value, DEFAULTS[k]['value']
     end
     record.value
   end
 
   def self.create_key(k)
-    self.create :key => k
+    self.create :key => k, :value => DEFAULTS[k]['value']
   end
 
   protected
